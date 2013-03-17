@@ -31,7 +31,7 @@ public class QueueTest {
     @Test
     public void testEnqueue() {
         a.enqueue(1);
-        assertEquals(1, a.dequeue());
+        assertEquals(new Integer(1), a.dequeue());
     }
 
     @Test
@@ -39,9 +39,9 @@ public class QueueTest {
        a.enqueue(1);
        a.enqueue(2);
        a.enqueue(3);
-       assertEquals(1, a.dequeue());
-       assertEquals(2, a.dequeue());
-       assertEquals(3, a.dequeue());
+       assertEquals(new Integer(1), a.dequeue());
+       assertEquals(new Integer(2), a.dequeue());
+       assertEquals(new Integer(3), a.dequeue());
        assertNull("Nothing in the queue", a.dequeue());
     }
 

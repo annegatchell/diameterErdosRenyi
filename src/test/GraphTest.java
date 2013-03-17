@@ -82,7 +82,7 @@ public class GraphTest {
         a.addEdge(3,4);
         a.addEdge(4,0);
         int[] comp = Graph.getLargestComponentVertices(a);
-        int[] expected = {0, 1, 2, 4, 5};
+        int[] expected = {0, 1, 2, 3, 4};
         assertArrayEquals(expected, comp);
     }
 
