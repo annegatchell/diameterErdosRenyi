@@ -65,13 +65,24 @@ public class GraphTest {
     // }
 
     @Test
-    public void testGetLargestComponentVertices(){
+    public void testGetLargestComponentVerticesDisconnected(){
         a.addEdge(0,1);
         a.addEdge(1,2);
         a.addEdge(0,2);
         a.addEdge(3,4);
         int[] comp = Graph.getLargestComponentVertices(a);
         int[] expected = {0, 1, 2};
+        assertArrayEquals(expected, comp);
+    }
+    @Test
+    public void testGetLargestComponentVerticesConnected(){
+        a.addEdge(0,1);
+        a.addEdge(1,2);
+        a.addEdge(2,3);
+        a.addEdge(3,4);
+        a.addEdge(4,0);
+        int[] comp = Graph.getLargestComponentVertices(a);
+        int[] expected = {0, 1, 2, 4, 5};
         assertArrayEquals(expected, comp);
     }
 

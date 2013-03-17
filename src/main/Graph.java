@@ -45,23 +45,39 @@ public class Graph{
 		return 0;
 	}
 
-	//
+	//DFS-like algorithm to find the largest component of a graph
+	//Returns the largest componenet's vertex numbers in an int array
+	//Runs in O(E+V)
 	public static int[] getLargestComponentVertices(Graph g){
 		int[] visitedInComponent = new int[g.V()];
+		//Initialize 
+		//O(V)
 		for(int i = 0; i < g.V(); i++){
 			visitedInComponent[i] = -1;
 		}
 		int component = 0;
+		//DFS exploration 
+		//Each time a new source is explored, component is incremented,
+		//and when a vertex is marked visited from that source, it gets
+		//marked with that source's component number
+		//O(V+E)
 		for(int i = 0; i < g.V(); i++){
 			if(visitedInComponent[i] < 0){
 				largetComponentVisit(component, visitedInComponent,g,i);
 				component++;
 			}
 		}
+		//Create a talley array to keep track of the size of each
+		//component. Loop through visitedInComponent array and increment
+		//componentSizes[1] for every vertex that is marked with 1. etc.
+		// O(V)
 		int[] componentSizes = new int[component];
 		for(int i = 0; i < g.V(); i++){
 			componentSizes[visitedInComponent[i]]++;
 		}
+		//Go through the componentSizes array of component sizes to 
+		//find the largest component (highest number of verteces)
+		//O(V)
 	 	int largest = -1;
 		int size = 0;
 		for(int i = 0; i < component; i++){
@@ -70,6 +86,10 @@ public class Graph{
 				largest = i;
 			}
 		}
+		//Create an array that is the size of the largest component
+		//Go through all verteces and add the ones belonging to the largest
+		//component to the largestComponent[] array
+		//O(V)
 		int[] largestComponent = new int[size];
 		int j = 0;
 		for(int i = 0; i < g.V(); i++){
@@ -81,6 +101,8 @@ public class Graph{
 		return largestComponent;
 	}
 
+	//The visit vertex method for getLargetsComponentVertices()
+	//Visits all the adjacent vertices in depth-first order
 	public static void largetComponentVisit(int component, int[] visited, Graph g, int u){
 		visited[u] = component;
 		for(int a :g.adj[u]){
