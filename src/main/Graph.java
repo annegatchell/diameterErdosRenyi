@@ -7,6 +7,7 @@ Does not guard against adding duplicate edges.
 
 package src.main;
 import java.util.Random;
+import java.util.Arrays;
 
 public class Graph{
 	private final int V; //number of verteces
@@ -31,8 +32,8 @@ public class Graph{
 	//O(V*(V+E))
 	public static int diameter(Graph g){
 		//Get the largest component of the graph
-		int[] componentForDiameter = getLargestComponentVertices(g);
-		int v = componentForDiameter.length();
+		int[] componentForDiameter = Graph.getLargestComponentVertices(g);
+		int v = componentForDiameter.length;
 
 		int[] diameters = new int[v]; //longest shortest path from each vert
 		//Initialize diameters
@@ -55,32 +56,57 @@ public class Graph{
 				visited[j] = false;
 				parent[j] = -1;
 			}
+
 			//use the actual vertex numbers to index these tracking
 			//arrays, since they contain all of the graph's verteces
 			//(V-length prevents having to do linear lookups in the 
 			//componentForDiameter array)
 			distance[source] = 0;
-			visited[source] = 1;
+			visited[source] = true;
 			parent[source] = -1;
 			Queue<Integer> q = new Queue<Integer>();
 			q.enqueue(source);
 			while(!q.isEmpty()){
 				int u = q.dequeue();
-				for(int v: g.getAdjacencyListForVertex(u)){
-					distance[v] = distance[u]+1;
-					parent[v] = u;
-					visited[v] = true;
-					q.enqueue(v);
+				Bag<Integer> badj = g.getAdjacencyListForVertex(u);
+				for(int w : badj){
+					if(!visited[w]){
+						distance[w] = distance[u]+1;
+						parent[w] = u;
+						visited[w] = true;
+						q.enqueue(w);
+					}
 				}
 			}
-			//Once BFS is over, scan 
+			//Once BFS is over, scan the verteces in the component
+			//for the largest distance
+			int longest = -1;
+			int length = -1;
+			int vertex;
+			for(int i = 0; i < v; i++){
+				vertex = componentForDiameter[i];
+				if(distance[vertex] > length) {
+					length = distance[vertex];
+					longest = i;
+				}
+			}
+			//Put this longest SP in the distance array at the index
+			//corresponding to the index of the source in componentForDiameter
+			diameters[longest] = length;
 		}
 
-
-		
-		int longestLength = 0;
-
-		return 0;
+		//Go through the diameters array and pick the longest one
+		int longest = -1;
+		int length = -1;
+		int vertex;
+		for(int i = 0; i < v; i++){
+			vertex = componentForDiameter[i];
+			if(diameters[i] > length) {
+				length = diameters[i];
+				longest = vertex;
+			}
+		}
+		return length;
 	}
 
 	//DFS-like algorithm to find the largest component of a graph
@@ -180,6 +206,7 @@ public class Graph{
 	}
 
 	public Bag<Integer> getAdjacencyListForVertex(int vertex){
+		//System.out.println(adj[vertex].toString());
 		return adj[vertex];
 	}
 

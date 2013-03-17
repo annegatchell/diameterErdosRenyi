@@ -31,6 +31,7 @@ public class QueueTest {
     @Test
     public void testEnqueue() {
         a.enqueue(1);
+        assertEquals(1, a.size());
         assertEquals(new Integer(1), a.dequeue());
     }
 

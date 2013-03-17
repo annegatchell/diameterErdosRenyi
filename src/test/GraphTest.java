@@ -4,6 +4,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Assert;
 import java.lang.Exception;
+import java.util.Arrays;
 
 import src.main.Bag;
 import src.main.Graph;
@@ -65,6 +66,19 @@ public class GraphTest {
     // }
 
     @Test
+    public void testGetAdjacencyListForVertex(){
+        a.addEdge(0,1);
+        a.addEdge(1,2);
+        a.addEdge(2,3);
+        a.addEdge(3,4);
+        a.addEdge(4,0);
+        Bag<Integer> b = new Bag<Integer>();
+        b.add(1);
+        b.add(4);
+        assertEquals(b.toString(), a.getAdjacencyListForVertex(0).toString());
+    }
+
+    @Test
     public void testGetLargestComponentVerticesDisconnected(){
         a.addEdge(0,1);
         a.addEdge(1,2);
@@ -93,12 +107,13 @@ public class GraphTest {
 
     @Test
     public void testDiameter5(){
+        
         a.addEdge(0,1);
         a.addEdge(1,2);
         a.addEdge(2,3);
         a.addEdge(3,4);
         a.addEdge(4,0);
-        assertEquals(5, Graph.diameter(a));
+        assertEquals(2, Graph.diameter(a));
     }
 
     @Test
@@ -107,7 +122,7 @@ public class GraphTest {
         a.addEdge(1,2);
         a.addEdge(0,2);
         a.addEdge(3,4);
-        assertEquals(3, Graph.diameter(a));
+        assertEquals(1, Graph.diameter(a));
     }
 
     public static void main(String args[]) {

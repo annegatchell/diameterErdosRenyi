@@ -23,8 +23,14 @@ public class Queue<T>{
 
 	public void enqueue(T item){
 		Node n = new Node(item);
-		back.next = n;
-		back = n;
+		if(isEmpty()){
+			front = n;
+			back = n;
+		}
+		else{
+			back.next = n;
+			back = n;
+		}
 		length++;
 	}
 
@@ -39,7 +45,11 @@ public class Queue<T>{
 	}
 
 	public boolean isEmpty(){
-		return length == 0;
+		return front == null;
+	}
+
+	public int size(){
+		return length;
 	}
 
 }
