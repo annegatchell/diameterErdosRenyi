@@ -14,6 +14,7 @@ public class Graph{
 	private boolean isDirected;
 	private Bag<Integer>[] adj; //adjacency list
 	public Random rand;
+	
 
 	public Graph(int v){
 		V = v;
@@ -25,21 +26,58 @@ public class Graph{
 		rand = new Random();
 	}
 
+	//diameter returns the diameter of the largest component in the graph
+	//(the component with the largest number of verteces)
+	//O(V*(V+E))
 	public static int diameter(Graph g){
 		//Get the largest component of the graph
 		int[] componentForDiameter = getLargestComponentVertices(g);
+		int v = componentForDiameter.length();
 
-		boolean[] visited = new boolean[g.V()]; //visited
-		int[] distance = new int[g.V()]; //distance from source
-		int[] parent = new int[g.V()]; //
-		int[] component = new int[g.V()];
-
-
-
-
-		for(int i = 0; i < g.V(); i++){
-			visited[i] = false;
+		int[] diameters = new int[v]; //longest shortest path from each vert
+		//Initialize diameters
+		for(int i = 0; i < v; i++){
+			diameters[i] = 0;
 		}
+		//Set up data structures for the BFS loop
+		boolean[] visited = new boolean[g.V()]; //visited
+		int[] distance = new int[g.V()]; //distance from source (index = source)
+		int[] parent = new int[g.V()]; //parent 
+
+		//For each vertex as a source, run BFS to find the longest 
+		//shorted path
+		for(int s = 0; s < v; s++){
+			//source is the vertex number of the source
+			int source = componentForDiameter[s];
+			//Initialize the arrays for this source
+			for(int j = 0; j < g.V(); j++){
+				distance[j] = -1;
+				visited[j] = false;
+				parent[j] = -1;
+			}
+			//use the actual vertex numbers to index these tracking
+			//arrays, since they contain all of the graph's verteces
+			//(V-length prevents having to do linear lookups in the 
+			//componentForDiameter array)
+			distance[source] = 0;
+			visited[source] = 1;
+			parent[source] = -1;
+			Queue<Integer> q = new Queue<Integer>();
+			q.enqueue(source);
+			while(!q.isEmpty()){
+				int u = q.dequeue();
+				for(int v: g.getAdjacencyListForVertex(u)){
+					distance[v] = distance[u]+1;
+					parent[v] = u;
+					visited[v] = true;
+					q.enqueue(v);
+				}
+			}
+			//Once BFS is over, scan 
+		}
+
+
+		
 		int longestLength = 0;
 
 		return 0;
@@ -47,6 +85,7 @@ public class Graph{
 
 	//DFS-like algorithm to find the largest component of a graph
 	//Returns the largest componenet's vertex numbers in an int array
+	//Returns the entire graph if it is a connecteed graph
 	//Runs in O(E+V)
 	public static int[] getLargestComponentVertices(Graph g){
 		int[] visitedInComponent = new int[g.V()];
@@ -138,6 +177,10 @@ public class Graph{
 		adj[x].add(y);
 		adj[y].add(x);
 		E++;
+	}
+
+	public Bag<Integer> getAdjacencyListForVertex(int vertex){
+		return adj[vertex];
 	}
 
 	public String toString(){
