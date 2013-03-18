@@ -48,7 +48,7 @@ public class Graph{
 	//(the component with the largest number of verteces)
 	//O(V*(V+E))
 	public static int diameter(Graph g){
-		
+
 		//Get the largest component of the graph
 		int[] componentForDiameter = Graph.getLargestComponentVertices(g);
 		int v = componentForDiameter.length;
