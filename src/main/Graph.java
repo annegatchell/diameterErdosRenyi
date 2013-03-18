@@ -16,6 +16,9 @@ public class Graph{
 	private Bag<Integer>[] adj; //adjacency list
 	public Random rand;
 	
+	//Space and Time measurement
+	private int numOps = 0;
+	private int space = 0;
 
 	public Graph(int v){
 		V = v;
