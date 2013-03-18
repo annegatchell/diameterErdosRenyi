@@ -84,7 +84,7 @@ public class GraphTest {
         a.addEdge(1,2);
         a.addEdge(0,2);
         a.addEdge(3,4);
-        int[] comp = Graph.getLargestComponentVertices(a);
+        int[] comp = a.getLargestComponentVertices();
         int[] expected = {0, 1, 2};
         assertArrayEquals(expected, comp);
     }
@@ -95,14 +95,14 @@ public class GraphTest {
         a.addEdge(2,3);
         a.addEdge(3,4);
         a.addEdge(4,0);
-        int[] comp = Graph.getLargestComponentVertices(a);
+        int[] comp = a.getLargestComponentVertices();
         int[] expected = {0, 1, 2, 3, 4};
         assertArrayEquals(expected, comp);
     }
 
     @Test
     public void testDiameterEmpty(){
-        assertEquals(0, Graph.diameter(a));
+        assertEquals(0, a.diameter());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class GraphTest {
         a.addEdge(2,3);
         a.addEdge(3,4);
         a.addEdge(4,0);
-        assertEquals(2, Graph.diameter(a));
+        assertEquals(2, a.diameter());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class GraphTest {
         a.addEdge(1,2);
         a.addEdge(0,2);
         a.addEdge(3,4);
-        assertEquals(1, Graph.diameter(a));
+        assertEquals(1, a.diameter());
     }
 
     public static void main(String args[]) {

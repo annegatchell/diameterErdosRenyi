@@ -14,7 +14,8 @@ public class Experiment{
 			for(int i = 0; i < trials; i++){
 				System.out.print(i);
 				Graph g = Graph.generateErdosRenyiGraph(graphSize);
-				int d = Graph.diameter(g);
+				int d = g.diameter();
+				System.out.println("size "+g.space());
 				rawTrialData.addData(graphSize, g.space(), g.numOps(), d);
 			}
 			rawTrialData.averageAllAddToMeasurement(averagedData);

@@ -47,10 +47,11 @@ public class Graph{
 	//diameter returns the diameter of the largest component in the graph
 	//(the component with the largest number of verteces)
 	//O(V*(V+E))
-	public static int diameter(Graph g){
-		
+	public int diameter(){
+		numOps = 0;
+		space = 0;
 		//Get the largest component of the graph
-		int[] componentForDiameter = Graph.getLargestComponentVertices(g);
+		int[] componentForDiameter = getLargestComponentVertices();
 		int v = componentForDiameter.length;
 
 		int[] diameters = new int[v]; //longest shortest path from each vert
@@ -59,9 +60,9 @@ public class Graph{
 			diameters[i] = 0;
 		}
 		//Set up data structures for the BFS loop
-		boolean[] visited = new boolean[g.V()]; //visited
-		int[] distance = new int[g.V()]; //distance from source (index = source)
-		int[] parent = new int[g.V()]; //parent 
+		boolean[] visited = new boolean[V]; //visited
+		int[] distance = new int[V]; //distance from source (index = source)
+		int[] parent = new int[V]; //parent 
 
 		//For each vertex as a source, run BFS to find the longest 
 		//shorted path
@@ -69,7 +70,7 @@ public class Graph{
 			//source is the vertex number of the source
 			int source = componentForDiameter[s];
 			//Initialize the arrays for this source
-			for(int j = 0; j < g.V(); j++){
+			for(int j = 0; j < V; j++){
 				distance[j] = -1;
 				visited[j] = false;
 				parent[j] = -1;
@@ -86,7 +87,7 @@ public class Graph{
 			q.enqueue(source);
 			while(!q.isEmpty()){
 				int u = q.dequeue();
-				Bag<Integer> badj = g.getAdjacencyListForVertex(u);
+				Bag<Integer> badj = getAdjacencyListForVertex(u);
 				for(int w : badj){
 					if(!visited[w]){
 						distance[w] = distance[u]+1;
@@ -124,8 +125,8 @@ public class Graph{
 				longest = vertex;
 			}
 		}
-		g.setSpace(5);
-		g.setNumOps(5);
+		numOps = 5;
+		space = 5;
 		return length;
 	}
 
@@ -133,11 +134,11 @@ public class Graph{
 	//Returns the largest componenet's vertex numbers in an int array
 	//Returns the entire graph if it is a connecteed graph
 	//Runs in O(E+V)
-	public static int[] getLargestComponentVertices(Graph g){
-		int[] visitedInComponent = new int[g.V()];
+	public int[] getLargestComponentVertices(){
+		int[] visitedInComponent = new int[V];
 		//Initialize 
 		//O(V)
-		for(int i = 0; i < g.V(); i++){
+		for(int i = 0; i < V; i++){
 			visitedInComponent[i] = -1;
 		}
 		int component = 0;
@@ -146,9 +147,9 @@ public class Graph{
 		//and when a vertex is marked visited from that source, it gets
 		//marked with that source's component number
 		//O(V+E)
-		for(int i = 0; i < g.V(); i++){
+		for(int i = 0; i < V; i++){
 			if(visitedInComponent[i] < 0){
-				largetComponentVisit(component, visitedInComponent,g,i);
+				largetComponentVisit(component, visitedInComponent,i);
 				component++;
 			}
 		}
@@ -157,7 +158,7 @@ public class Graph{
 		//componentSizes[1] for every vertex that is marked with 1. etc.
 		// O(V)
 		int[] componentSizes = new int[component];
-		for(int i = 0; i < g.V(); i++){
+		for(int i = 0; i < V; i++){
 			componentSizes[visitedInComponent[i]]++;
 		}
 		//Go through the componentSizes array of component sizes to 
@@ -177,7 +178,7 @@ public class Graph{
 		//O(V)
 		int[] largestComponent = new int[size];
 		int j = 0;
-		for(int i = 0; i < g.V(); i++){
+		for(int i = 0; i < V; i++){
 			if(visitedInComponent[i] == largest){
 				largestComponent[j] = i;
 				j++;
@@ -188,11 +189,11 @@ public class Graph{
 
 	//The visit vertex method for getLargetsComponentVertices()
 	//Visits all the adjacent vertices in depth-first order
-	public static void largetComponentVisit(int component, int[] visited, Graph g, int u){
+	public void largetComponentVisit(int component, int[] visited, int u){
 		visited[u] = component;
-		for(int a :g.adj[u]){
+		for(int a : adj[u]){
 			if(visited[a] < 0){
-				largetComponentVisit(component, visited, g, a);
+				largetComponentVisit(component, visited, a);
 			}
 		}
 	}
