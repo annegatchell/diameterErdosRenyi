@@ -7,11 +7,11 @@ public class Measurement{
 		measurements = new Bag<Node>();
 	}
 	private class Node{
-		int n;
-		int space;
-		int numOps;
-		int diameter;
-		Node(int num, int s, int no, int d){
+		long n;
+		long space;
+		long numOps;
+		long diameter;
+		Node(long num, long s, long no, long d){
 			n = num;
 			space = s;
 			numOps = no;
@@ -19,22 +19,22 @@ public class Measurement{
 		}
 	}
 
-	public void addData(int n, int s, int no, int d){
+	public void addData(long n, long s, long no, long d){
 		measurements.add(new Node(n, s, no, d));
 	}
 
 	public void averageAllAddToMeasurement(Measurement avg){
-		int spaceTotal = 0, numOpsTotal = 0, diameterTotal = 0, numTotal = 0;
+		long spaceTotal = 0, numOpsTotal = 0, diameterTotal = 0, numTotal = 0;
 		for(Node n : measurements){
 			numTotal += n.n;
 			spaceTotal += n.space;
 			numOpsTotal += n.numOps;
 			diameterTotal += n.diameter;
 		}
-		int numAvg = numTotal/measurements.size();
-		int spaceAvg = spaceTotal/measurements.size();
-		int numOpsAvg = numOpsTotal/measurements.size();
-		int diameterAvg = diameterTotal/measurements.size();
+		long numAvg = numTotal/measurements.size();
+		long spaceAvg = spaceTotal/measurements.size();
+		long numOpsAvg = numOpsTotal/measurements.size();
+		long diameterAvg = diameterTotal/measurements.size();
 		avg.addData(numAvg,spaceAvg, numOpsAvg, diameterAvg);
 	}
 

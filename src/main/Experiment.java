@@ -3,8 +3,8 @@ package src.main;
 public class Experiment{
 
 	public static void main(String[] args){
-		int[] n = {5, 20, 50, 130, 320, 770, 1790, 4100, 9220};
-		int trials = 1;
+		int[] n = {10, 20, 50, 130, 320, 770, 1790, 4100, 9220};
+		int trials = 10;
 		Measurement rawTrialData;
 		Measurement averagedData = new Measurement();
 		Graph g;
