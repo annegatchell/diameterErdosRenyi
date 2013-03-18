@@ -52,13 +52,15 @@ public class Graph{
 		space = 0;
 
 		//Get the largest component of the graph
+		//V space
 		int[] componentForDiameter = getLargestComponentVertices();
 		space+=componentForDiameter.length;
 		numOps++;
 		int v = componentForDiameter.length;
-		space+=1;
+		space++;
 		numOps++;
 
+		//V space
 		int[] diameters = new int[v]; //longest shortest path from each vert
 		space+=v;
 		numOps++;
@@ -69,6 +71,7 @@ public class Graph{
 			numOps++;
 		}
 		//Set up data structures for the BFS loop
+		//3V space
 		boolean[] visited = new boolean[V]; //visited
 		space+=V;
 		numOps++;
@@ -81,10 +84,17 @@ public class Graph{
 
 		//For each vertex as a source, run BFS to find the longest 
 		//shorted path
+		//**For recording space of things in this loop, we only want to 
+		//**record the space required by one loop through. 
+		//**Therefore, we will record a temporary size count for each loop
+		//**and we will keep the largest tally for our measurement
+		int currentLoopSpace = 0;
+		int largestLoopSpace = 0;
 		for(int s = 0; s < v; s++){
+			currentLoopSpace = 0;
 			//source is the vertex number of the source
 			int source = componentForDiameter[s];
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			//Initialize the arrays for this source
 			for(int j = 0; j < V; j++){
@@ -107,14 +117,14 @@ public class Graph{
 			parent[source] = -1;
 			numOps++;
 			Queue<Integer> q = new Queue<Integer>();
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			q.enqueue(source);
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			while(!q.isEmpty()){
 				int u = q.dequeue();
-				space++;
+				currentLoopSpace++;
 				numOps++;
 				Bag<Integer> badj = getAdjacencyListForVertex(u);
 				numOps++;
@@ -127,7 +137,7 @@ public class Graph{
 						visited[w] = true;
 						numOps++;
 						q.enqueue(w);
-						space++;
+						currentLoopSpace++;
 						numOps++;
 					}else{numOps++;}
 				}
@@ -135,13 +145,13 @@ public class Graph{
 			//Once BFS is over, scan the verteces in the component
 			//for the largest distance
 			int longest = -1;
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			int length = -1;
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			int vertex;
-			space++;
+			currentLoopSpace++;
 			numOps++;
 			for(int i = 0; i < v; i++){
 				vertex = componentForDiameter[i];
@@ -157,7 +167,14 @@ public class Graph{
 			//corresponding to the index of the source in componentForDiameter
 			diameters[longest] = length;
 			numOps++;
+
+			//If this iteration's space size is larger than the largest, save
+			if(currentLoopSpace > largestLoopSpace){
+				largestLoopSpace = currentLoopSpace;
+			}
 		}
+		//System.out.println("largest loop space "+largestLoopSpace+)
+		space+=largestLoopSpace;
 
 		//Go through the diameters array and pick the longest one
 		int longest = -1;
