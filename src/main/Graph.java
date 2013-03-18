@@ -276,15 +276,12 @@ public class Graph{
 		int c = 5;
 		double p = (double)c/(double)(n-1);
 		Graph g = new Graph(n);
-		System.out.println("p = "+p);
+		//System.out.println("p = "+p);
 		for(int i = 0; i < n; i++){
 			for(int j = i+1; j < n; j++){
 				if(g.rand.nextInt(Integer.MAX_VALUE) < p*Integer.MAX_VALUE){
 					g.addEdge(i, j);
-					System.out.println("Adding edge "+i+" "+j);
 				}
-				else
-				System.out.println("Not adding edge "+i+" "+j);
 			}
 		}
 		return g;

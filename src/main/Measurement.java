@@ -34,7 +34,7 @@ public class Measurement{
 		int numAvg = numTotal/measurements.size();
 		int spaceAvg = spaceTotal/measurements.size();
 		int numOpsAvg = numOpsTotal/measurements.size();
-		int diameterAvg = numOpsTotal/measurements.size();
+		int diameterAvg = diameterTotal/measurements.size();
 		avg.addData(numAvg,spaceAvg, numOpsAvg, diameterAvg);
 	}
 
