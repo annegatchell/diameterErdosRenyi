@@ -1,18 +1,16 @@
 package src.main;
 
 public class Measurement{
-	Bag<Node> measurements;
+	private Bag<Node> measurements;
 
-	public Measurement(int[] nums){
+	public Measurement(){
 		measurements = new Bag<Node>();
 	}
-
-	class Node{
+	private class Node{
 		int n;
 		int space;
 		int numOps;
 		int diameter;
-		Point next;
 		Node(int num, int s, int no, int d){
 			n = num;
 			space = s;
@@ -21,13 +19,28 @@ public class Measurement{
 		}
 	}
 
-	public addData(int n, int s, int no, int d){
+	public void addData(int n, int s, int no, int d){
 		measurements.add(new Node(n, s, no, d));
+	}
+
+	public void averageAllAddToMeasurement(Measurement avg){
+		int spaceTotal = 0, numOpsTotal = 0, diameterTotal = 0, numTotal = 0;
+		for(Node n : measurements){
+			numTotal += n.n;
+			spaceTotal += n.space;
+			numOpsTotal += n.numOps;
+			diameterTotal += n.diameter;
+		}
+		int numAvg = numTotal/measurements.size();
+		int spaceAvg = spaceTotal/measurements.size();
+		int numOpsAvg = numOpsTotal/measurements.size();
+		int diameterAvg = numOpsTotal/measurements.size();
+		avg.addData(numAvg,spaceAvg, numOpsAvg, diameterAvg);
 	}
 
 	public String diameterDataString(){
 		StringBuilder s = new StringBuilder();
-		s.append("\\addplot coordinates {");
+		s.append("\\addplot coordinates {\n");
 		for(Node n: measurements){
 			s.append("("+n.n+", "+n.diameter+")\n");
 		}
@@ -37,7 +50,7 @@ public class Measurement{
 
 	public String spaceDataString(){
 		StringBuilder s = new StringBuilder();
-		s.append("\\addplot coordinates {");
+		s.append("\\addplot coordinates {\n");
 		for(Node n: measurements){
 			s.append("("+n.n+", "+n.space+")\n");
 		}
@@ -47,7 +60,7 @@ public class Measurement{
 
 	public String numOpsDataString(){
 		StringBuilder s = new StringBuilder();
-		s.append("\\addplot coordinates {");
+		s.append("\\addplot coordinates {\n");
 		for(Node n: measurements){
 			s.append("("+n.n+", "+n.numOps+")\n");
 		}

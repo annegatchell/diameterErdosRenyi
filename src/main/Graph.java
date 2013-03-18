@@ -20,6 +20,7 @@ public class Graph{
 	private int numOps = 0;
 	private int space = 0;
 
+
 	public Graph(int v){
 		V = v;
 		E = 0;
@@ -30,10 +31,24 @@ public class Graph{
 		rand = new Random();
 	}
 
+	public int numOps(){
+		return numOps;
+	}
+	public int space(){
+		return space;
+	}
+	private void setNumOps(int n){
+		numOps = n;
+	}
+	private void setSpace(int n){
+		space = n;
+	}
+
 	//diameter returns the diameter of the largest component in the graph
 	//(the component with the largest number of verteces)
 	//O(V*(V+E))
 	public static int diameter(Graph g){
+		
 		//Get the largest component of the graph
 		int[] componentForDiameter = Graph.getLargestComponentVertices(g);
 		int v = componentForDiameter.length;
@@ -109,6 +124,8 @@ public class Graph{
 				longest = vertex;
 			}
 		}
+		g.setSpace(5);
+		g.setNumOps(5);
 		return length;
 	}
 

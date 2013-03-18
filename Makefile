@@ -1,5 +1,6 @@
 JCC = javac
 JFLAGS = -g
+JLINT = -Xlint
 
 MAIN_SRCS = src/main/*.java
 MAIN_CLASSES = $(MAIN_SRCS:.java=.class)
@@ -11,7 +12,7 @@ TEST_EXE = $(TEST_SRCS:.java=)
 ALL_SRCS = $(MAIN_SRCS) $(TEST_SRCS)
 ALL_CLASSES = $(MAIN_CLASSES) $(TEST_CLASSES)
 
-.PHONY: all clean test main testsRun
+.PHONY: all clean test main testsRun lint
 
 all: test main
 runExp: main runExperiment 

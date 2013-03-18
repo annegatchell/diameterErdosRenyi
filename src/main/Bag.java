@@ -6,7 +6,7 @@ public class Bag<T> implements Iterable<T>{
 	Node first;
 	int size;
 
-	class Node{
+	private class Node{
 		T item;
 		Node next;
 		Node(T i, Node n){

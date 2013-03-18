@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 @Suite.SuiteClasses({
 	src.test.BagTest.class,
 	src.test.GraphTest.class,
+	src.test.MeasurementTest.class
 })
 public class AllMyTests {
   //nothing
