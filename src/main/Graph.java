@@ -129,7 +129,7 @@ public class Graph{
 						q.enqueue(w);
 						space++;
 						numOps++;
-					}
+					}else{numOps++;}
 				}
 			}
 			//Once BFS is over, scan the verteces in the component
@@ -151,7 +151,7 @@ public class Graph{
 					numOps++;
 					longest = i;
 					numOps++;
-				}
+				}else{numOps++;}
 			}
 			//Put this longest SP in the distance array at the index
 			//corresponding to the index of the source in componentForDiameter
@@ -177,7 +177,7 @@ public class Graph{
 				numOps++;
 				longest = vertex;
 				numOps++;
-			}
+			}else{numOps++;}
 		}
 		return length;
 	}
@@ -188,12 +188,16 @@ public class Graph{
 	//Runs in O(E+V)
 	public int[] getLargestComponentVertices(){
 		int[] visitedInComponent = new int[V];
+		space+=V;
+		numOps++;
 		//Initialize 
 		//O(V)
 		for(int i = 0; i < V; i++){
 			visitedInComponent[i] = -1;
+			numOps++;
 		}
 		int component = 0;
+		numOps++;
 		//DFS exploration 
 		//Each time a new source is explored, component is incremented,
 		//and when a vertex is marked visited from that source, it gets
@@ -202,39 +206,56 @@ public class Graph{
 		for(int i = 0; i < V; i++){
 			if(visitedInComponent[i] < 0){
 				largetComponentVisit(component, visitedInComponent,i);
+				numOps++;
 				component++;
-			}
+				numOps++;
+			}else{numOps++;}
 		}
 		//Create a talley array to keep track of the size of each
 		//component. Loop through visitedInComponent array and increment
 		//componentSizes[1] for every vertex that is marked with 1. etc.
 		// O(V)
 		int[] componentSizes = new int[component];
+		space+=component;
+		numOps++;
 		for(int i = 0; i < V; i++){
 			componentSizes[visitedInComponent[i]]++;
+			numOps++;
 		}
 		//Go through the componentSizes array of component sizes to 
 		//find the largest component (highest number of verteces)
 		//O(V)
 	 	int largest = -1;
+	 	space++;
+	 	numOps++;
 		int size = 0;
+		space++;
+		numOps++;
 		for(int i = 0; i < component; i++){
 			if(size < componentSizes[i]){
 				size = componentSizes[i];
+				numOps++;
 				largest = i;
-			}
+				numOps++;
+			}else{numOps++;}
 		}
 		//Create an array that is the size of the largest component
 		//Go through all verteces and add the ones belonging to the largest
 		//component to the largestComponent[] array
 		//O(V)
 		int[] largestComponent = new int[size];
+		space++;
+		numOps++;
 		int j = 0;
+		space++;
+		numOps++;
 		for(int i = 0; i < V; i++){
 			if(visitedInComponent[i] == largest){
 				largestComponent[j] = i;
+				numOps++;
 				j++;
-			}
+				numOps++;
+			}else{numOps++;}
 		}
 		return largestComponent;
 	}
@@ -243,10 +264,11 @@ public class Graph{
 	//Visits all the adjacent vertices in depth-first order
 	public void largetComponentVisit(int component, int[] visited, int u){
 		visited[u] = component;
+		numOps++;
 		for(int a : adj[u]){
 			if(visited[a] < 0){
 				largetComponentVisit(component, visited, a);
-			}
+			}else{numOps++;}
 		}
 	}
 
