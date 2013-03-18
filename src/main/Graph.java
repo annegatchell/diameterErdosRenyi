@@ -53,28 +53,47 @@ public class Graph{
 
 		//Get the largest component of the graph
 		int[] componentForDiameter = getLargestComponentVertices();
+		space+=componentForDiameter.length;
+		numOps++;
 		int v = componentForDiameter.length;
+		space+=1;
+		numOps++;
 
 		int[] diameters = new int[v]; //longest shortest path from each vert
+		space+=v;
+		numOps++;
+
 		//Initialize diameters
 		for(int i = 0; i < v; i++){
 			diameters[i] = 0;
+			numOps++;
 		}
 		//Set up data structures for the BFS loop
 		boolean[] visited = new boolean[V]; //visited
+		space+=V;
+		numOps++;
 		int[] distance = new int[V]; //distance from source (index = source)
+		space+=V;
+		numOps++;
 		int[] parent = new int[V]; //parent 
+		space+=V;
+		numOps++;
 
 		//For each vertex as a source, run BFS to find the longest 
 		//shorted path
 		for(int s = 0; s < v; s++){
 			//source is the vertex number of the source
 			int source = componentForDiameter[s];
+			space++;
+			numOps++;
 			//Initialize the arrays for this source
 			for(int j = 0; j < V; j++){
 				distance[j] = -1;
+				numOps++;
 				visited[j] = false;
+				numOps++;
 				parent[j] = -1;
+				numOps++;
 			}
 
 			//use the actual vertex numbers to index these tracking
@@ -82,52 +101,84 @@ public class Graph{
 			//(V-length prevents having to do linear lookups in the 
 			//componentForDiameter array)
 			distance[source] = 0;
+			numOps++;
 			visited[source] = true;
+			numOps++;
 			parent[source] = -1;
+			numOps++;
 			Queue<Integer> q = new Queue<Integer>();
+			space++;
+			numOps++;
 			q.enqueue(source);
+			space++;
+			numOps++;
 			while(!q.isEmpty()){
 				int u = q.dequeue();
+				space++;
+				numOps++;
 				Bag<Integer> badj = getAdjacencyListForVertex(u);
+				numOps++;
 				for(int w : badj){
 					if(!visited[w]){
 						distance[w] = distance[u]+1;
+						numOps++;
 						parent[w] = u;
+						numOps++;
 						visited[w] = true;
+						numOps++;
 						q.enqueue(w);
+						space++;
+						numOps++;
 					}
 				}
 			}
 			//Once BFS is over, scan the verteces in the component
 			//for the largest distance
 			int longest = -1;
+			space++;
+			numOps++;
 			int length = -1;
+			space++;
+			numOps++;
 			int vertex;
+			space++;
+			numOps++;
 			for(int i = 0; i < v; i++){
 				vertex = componentForDiameter[i];
+				numOps++;
 				if(distance[vertex] > length) {
 					length = distance[vertex];
+					numOps++;
 					longest = i;
+					numOps++;
 				}
 			}
 			//Put this longest SP in the distance array at the index
 			//corresponding to the index of the source in componentForDiameter
 			diameters[longest] = length;
+			numOps++;
 		}
 
 		//Go through the diameters array and pick the longest one
 		int longest = -1;
+		space++;
+		numOps++;
 		int length = -1;
+		space++;
+		numOps++;
 		int vertex;
+		space++;
+		numOps++;
 		for(int i = 0; i < v; i++){
 			vertex = componentForDiameter[i];
+			numOps++;
 			if(diameters[i] > length) {
 				length = diameters[i];
+				numOps++;
 				longest = vertex;
+				numOps++;
 			}
 		}
-		numOps = 5;
-		space = 5;
 		return length;
 	}
 
