@@ -1,3 +1,11 @@
+/*
+Bag.java
+Author: Anne Gatchell
+Date modified: 18 March 2013
+
+This is a generic Bag class that is implemented as a linked list.
+*/
+
 package src.main;
 
 import java.util.Iterator;

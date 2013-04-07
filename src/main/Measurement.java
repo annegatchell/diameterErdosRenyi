@@ -1,3 +1,14 @@
+/*
+Measurement.java
+Author: Anne Gatchell
+Date modified: 18 March 2013
+
+This is a container for diameter, number of operations, and space 
+data for an n-sized graph. It keeps a linked list of data points.
+It is also capable of averaging all of the measurements it contains
+and adding that average to another class.
+*/
+
 package src.main;
 
 public class Measurement{

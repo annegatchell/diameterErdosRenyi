@@ -1,9 +1,22 @@
+/*
+Experiment.java
+Author: Anne Gatchell
+Date modified: 18 March 2013
+
+
+An experiment that calculates the diameters of Erdos-Renyi
+graphs of sizes n = {5, 10, 20, 50, 130, 320, 770, 1790, 4100, 9220, 20000},
+averaged over 10 separate trials on independently generated Erdos-Renyi
+graphs.
+
+*/
+
 package src.main;
 
 public class Experiment{
 
 	public static void main(String[] args){
-		int[] n = {10, 20, 50, 130, 320, 770, 1790, 4100, 9220};
+		int[] n = {5, 10, 20, 50, 130, 320, 770, 1790, 4100, 9220, 10000};
 		int trials = 10;
 		Measurement rawTrialData;
 		Measurement averagedData = new Measurement();

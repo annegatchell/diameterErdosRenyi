@@ -1,3 +1,11 @@
+/*
+Queue.java
+Author: Anne Gatchell
+Date modified: 18 March 2013
+
+An implemenation of a generic queue.
+*/
+
 package src.main;
 
 public class Queue<T>{

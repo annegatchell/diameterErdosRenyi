@@ -1,8 +1,12 @@
 /*
+Graph.java
+Author: Anne Gatchell
+Date modified: 18 March 2013
+
+
 An implemenation of an unweighted, undirected graph.
-
 Does not guard against adding duplicate edges.
-
+Duplicate edges will not effect the diameter calculations, though.
 */
 
 package src.main;
